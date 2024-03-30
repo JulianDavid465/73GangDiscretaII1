@@ -7,7 +7,7 @@
 
 //Este numero se va a cambiar en el futuro o puede definirse la lista de vertices de otra forma
 //  por estar un poco apurado lo dejo así
-#define V_MAX 100;
+#define V_MAX 1000000
 
 //Definicion del tipo u32, uso u_int32_t porque ya está hecho y, según leí, unsigned int o long unsigned int no siempre
 //  tienenel largo pensado y le reduce portabilidad 
@@ -22,38 +22,47 @@ typedef u32 color;
   ConstruirGrafo() debe ser O(m) y si lo pongo a recorrer todo el arreglo del hood queda O(m^2) aprox, 
   entonces cada vertice tiene un puntero al punto del arreglo donde está la dirección de la ultima
   arista en añadirse, y un color para pintarlo
+
+p edge 5 5
+e 3 0
+e 4 1
+e 2 4
+e 1 2
+e 3 1
+
 */
+
 typedef struct vertexSt{
-    u32 number;
-    u32 hood_amm;
-    vertex hood[V_MAX-2];
-    vertex **last_hood;
-    color color;
-} vertex;
+    u32     cant_vecinos;
+    u32     vecinos[1000];
+    color   color;
+} Vertex;
 
 //  Los grafos tienen su lista de vertices la cantidad de vertices y aristas y el Delta del grafo.
 
-typedef struct Grafo{
-    vertex *vert[V_MAX];
-//    vertex **last_vert;
-    u32 vertex_amm;
-    u32 edges_amm;
 
-    u32 big_delta;
-} grafoSt;
+typedef struct Grafo{
+    Vertex *vert[V_MAX];
+    u32     vertex_amm;
+    u32     edges_amm;
+    u32     delta;
+}Grafo__St;
+
+typedef struct Grafo *grafoSt;
 
 //  Funcion auxiliar para crear un vertice, debe hacer malloc
-vertex *create_vertex(u32 name);
+Vertex *create_vertex();
 
 //Ver si un vertice esta en el grafo
-bool in_grafo(u32 name);
+bool in_grafo(u32 vert, grafoSt grafo);
+  
 
 /*
   Funcion auxiliar para añadir una arista a un grafo, la idea es que mire cuales de los dos vertices
     ya se han añadido al grafo, se crean los que no esten ya creados, y se toma alguno para
     ir a su arreglo de hood y añadir al nuevo vecino, y lo mismo con el otro. 
 */
-void add_edge(grafoSt *graf, u32 vert1, u32 vert2);
+void add_edge(grafoSt graf, u32 vert1, u32 vert2);
 
 // Devuelve el grado del vertice de un grafo
 u32 grado(u32 vert, grafoSt grafo);
@@ -89,8 +98,4 @@ u32 numeroDeLados(grafoSt grafo);
 u32 delta(grafoSt grafo);
 
 
-
-
-
-
-#endif 
+#endif
