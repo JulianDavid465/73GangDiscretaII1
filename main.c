@@ -26,9 +26,13 @@ int main() {
     printf("Colores de los vértices:\n");
     for (u32 i = 0; i < graph->vertex_amm; i++) {
         if (graph->vert[i] != NULL) {
+            asignarColor(i%10, i, graph);
             printf("Vértice %u: Color %u\n", i, colour(i, graph));
         }
     }
+
+    color colour1[numeroDeVertices(graph)];
+    
 
     // Imprimir los vecinos de cada vértice
     printf("Vecinos de los vértices:\n");
@@ -41,6 +45,25 @@ int main() {
             printf("\n");
         }
     }
+
+    extraerColor(graph, colour1);
+    printf("Todos los colores son: \n");
+    for(u32 i = 0; i < numeroDeVertices(graph) ;i++){
+        printf("Color de vertice %d es %d\n", i, colour1[i]);
+    }
+
+    color colour2[numeroDeVertices(graph)];
+    for(u32 i = 0; i < numeroDeVertices(graph) ;i++){
+        colour2[i] = i%15;
+    }
+
+    importarColores(colour2, graph);
+    printf("Los colores nuevos son: \n");
+    for(u32 i = 0; i < numeroDeVertices(graph) ;i++){
+        printf("Color de vertice %d es %d\n", i, colour2[i]);
+    }
+    asignarColor(999, 255, graph);
+    printf("color de 255 es %d\n", colour(255, graph));
 
     // Liberar la memoria del grafo
     destruirGrafo(graph);
