@@ -5,13 +5,9 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-//Este numero se va a cambiar en el futuro o puede definirse la lista de vertices de otra forma
-//  por estar un poco apurado lo dejo así
-#define V_MAX 1000000
-
 //Definicion del tipo u32, uso u_int32_t porque ya está hecho y, según leí, unsigned int o long unsigned int no siempre
 //  tienenel largo pensado y le reduce portabilidad 
-typedef __uint32_t u32;
+typedef unsigned int u32;
 
 //Definicion segun la consigna
 typedef u32 color;
@@ -34,15 +30,16 @@ e 3 1
 
 typedef struct vertexSt{
     u32     cant_vecinos;
-    u32     vecinos[1000];
+    u32     *vecinos;
     color   color;
+    u32     cantidad;
 } Vertex;
 
 //  Los grafos tienen su lista de vertices la cantidad de vertices y aristas y el Delta del grafo.
 
 
 typedef struct Grafo{
-    Vertex *vert[V_MAX];
+    Vertex **vert;
     u32     vertex_amm;
     u32     edges_amm;
     u32     delta;

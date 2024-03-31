@@ -16,7 +16,7 @@ int main() {
 
     // Imprimir los grados de cada vértice
     printf("Grados de los vértices:\n");
-    for (u32 i = 0; i < V_MAX; i++) {
+    for (u32 i = 0; i < graph->vertex_amm; i++) {
         if (graph->vert[i] != NULL) {
             printf("Vértice %u: Grado %u\n", i, grado(i, graph));
         }
@@ -24,7 +24,7 @@ int main() {
 
     // Imprimir los colores de cada vértice
     printf("Colores de los vértices:\n");
-    for (u32 i = 0; i < V_MAX; i++) {
+    for (u32 i = 0; i < graph->vertex_amm; i++) {
         if (graph->vert[i] != NULL) {
             printf("Vértice %u: Color %u\n", i, colour(i, graph));
         }
@@ -32,7 +32,7 @@ int main() {
 
     // Imprimir los vecinos de cada vértice
     printf("Vecinos de los vértices:\n");
-    for (u32 i = 0; i < V_MAX; i++) {
+    for (u32 i = 0; i < graph->vertex_amm; i++) {
         if (graph->vert[i] != NULL) {
             printf("Vértice %u: ", i);
             for (u32 j = 0; j < grado(i, graph); j++) {
