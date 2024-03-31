@@ -8,37 +8,23 @@
 
 
 //  Funcion auxiliar para crear un vertice, debe hacer malloc
-Vertex *create_vertex() {
-    Vertex *vertex = malloc(sizeof(Vertex));
-    vertex->cantidad = 20;
-    if (vertex != NULL) {
-        vertex->cant_vecinos = 0;
-        vertex->vecinos = malloc(vertex->cantidad*sizeof(u32));
-        //memset(vertex->vecinos, 0, sizeof(vertex->vecinos));
+Vertice *crear_vertice() {
+    Vertice *vertice = malloc(sizeof(Vertice));
+    vertice->cantidad = 20;
+    if (vertice != NULL) {
+        vertice->cant_vecinos = 0;
+        vertice->vecinos = malloc(vertice->cantidad*sizeof(u32));
+        //memset(vertice->vecinos, 0, sizeof(vertice->vecinos));
     }
-    return vertex;
+    return vertice;
 }
 
-void destroy_vertex(Vertex *vertex) {
-    if (vertex != NULL) {
-        free(vertex->vecinos);
-        free(vertex);
-    }
-}    
-
-
-
-void destroy_graph(grafoSt graph) {
-    if (graph != NULL) {
-        for (u32 i = 0; i < graph->vertex_amm; i++) {
-            destroy_vertex(graph->vert[i]);
-        }
-        free(graph);
+void destruir_vertice(Vertice *vertice) {
+    if (vertice != NULL) {
+        free(vertice->vecinos);
+        free(vertice);
     }
 }
-
-//Ver si un vertice esta en el grafo
-//bool in_grafo(u32 vert, grafoSt grafo);
 
 /*
   Funcion auxiliar para añadir una arista a un grafo, la idea es que mire cuales de los dos vertices
@@ -46,13 +32,13 @@ void destroy_graph(grafoSt graph) {
     ir a su arreglo de hood y añadir al nuevo vecino, y lo mismo con el otro. 
 */
 
-void add_edge(grafoSt graf, u32 vert1, u32 vert2) {
+void anadir_lado(grafoSt graf, u32 vert1, u32 vert2) {
 
     if (graf->vert[vert1] == NULL) {
-        graf->vert[vert1] = create_vertex();
+        graf->vert[vert1] = crear_vertice();
     }
     if (graf->vert[vert2] == NULL) {
-        graf->vert[vert2] = create_vertex();
+        graf->vert[vert2] = crear_vertice();
     }
 
     u32 next_vecino = graf->vert[vert1]->cant_vecinos;
@@ -90,7 +76,7 @@ void add_edge(grafoSt graf, u32 vert1, u32 vert2) {
 
 // Devuelve el grado del vertice de un grafo
 u32 grado(u32 vert, grafoSt grafo){
-    if(vert < grafo->vertex_amm){
+    if(vert < grafo->cant_vertices){
         return grafo->vert[vert]->cant_vecinos;
     } else {
         return 0;
@@ -98,20 +84,19 @@ u32 grado(u32 vert, grafoSt grafo){
 }
 
 color colour(u32 vert, grafoSt grafo){
-    if(vert < grafo->vertex_amm){
+    if(vert < grafo->cant_vertices){
         return grafo->vert[vert]->color;
     } else {
         return (1<<30) - 1;
     }
 }
 
-
 /*
     Devuelve el nombre del j-esimo vecino de vert para acceder a SUS datos, tendra la pinta de
   grafo.vert[j]
 */
 u32 vecino(u32 j, u32 vert, grafoSt grafo){
-    if(vert < grafo->vertex_amm && j < grado(vert, grafo)){
+    if(vert < grafo->cant_vertices && j < grado(vert, grafo)){
         return grafo->vert[vert]->vecinos[j];
     } else {
         return (1<<30) - 1;
@@ -119,21 +104,21 @@ u32 vecino(u32 j, u32 vert, grafoSt grafo){
 }
 
 void asignarColor(color c, u32 vert, grafoSt grafo){
-    if(vert < grafo->vertex_amm){
+    if(vert < grafo->cant_vertices){
         grafo->vert[vert]->color = c;
     }
 }
 
 //Deposita en colour[i] el color del vertice i, colour tiene n lugares
 void extraerColor(grafoSt grafo, color *colour){
-    for(u32 i = 0; i < grafo->vertex_amm ;i++){
+    for(u32 i = 0; i < grafo->cant_vertices ;i++){
         colour[i] = grafo->vert[i]->color;
     }
 }
 
 //Asigna el vertice i el color colour[i]
 void importarColores(color *colour, grafoSt grafo){
-    for(u32 i = 0; i < grafo->vertex_amm ;i++){
+    for(u32 i = 0; i < grafo->cant_vertices ;i++){
         asignarColor(colour[i], i, grafo);
     }
 }
@@ -145,37 +130,37 @@ grafoSt construirGrafo(){
 
     char c;
     char str[4];
-    u32 num_vertices, num_edges;
+    u32 num_vertices, num_lados;
     u32 vert1, vert2; // Variables para almacenar los vértices de las aristas
 
     // Lee la primera línea para obtener el tipo y el número de vértices y aristas
-    u32 escaneados = scanf("%c %s %u %u", &c, str, &num_vertices, &num_edges);
+    u32 escaneados = scanf("%c %s %u %u", &c, str, &num_vertices, &num_lados);
     if(escaneados != 4){
         printf("error");
     }
 
     if (graf != NULL) {
-        graf->vertex_amm = 0;
-        graf->edges_amm = 0;
+        graf->cant_vertices = 0;
+        graf->cant_lados = 0;
         graf->delta = 0;
-        //graph->vertices = vertex;
-        graf->vert = malloc(num_vertices * sizeof(Vertex *));
+        //graf->vertices = vertice;
+        graf->vert = malloc(num_vertices * sizeof(Vertice *));
 
         for (u32 i = 0; i < num_vertices; i++) {
             graf->vert[i] = NULL;
         }
 
-        graf->vertex_amm = num_vertices;
-        graf->edges_amm  = num_edges;
+        graf->cant_vertices = num_vertices;
+        graf->cant_lados  = num_lados;
 
 
-        for(u32 i = 0; i < num_edges ;i++){
+        for(u32 i = 0; i < num_lados ;i++){
             escaneados = scanf(" %c %u %u", &c, &vert1, &vert2);
             if(escaneados != 3){
             printf("error");
             }
 
-            add_edge(graf, vert1, vert2);
+            anadir_lado(graf, vert1, vert2);
         }
         
     }
@@ -185,19 +170,19 @@ grafoSt construirGrafo(){
 
 //Debe ser como mucho O(m)
 void destruirGrafo(grafoSt grafo){
-    for(u32 i = 0; i < grafo->vertex_amm ;i++){
-        destroy_vertex(grafo->vert[i]);
+    for(u32 i = 0; i < grafo->cant_vertices ;i++){
+        destruir_vertice(grafo->vert[i]);
     }
     free(grafo->vert);
     free(grafo);
 }
 
 u32 numeroDeVertices(grafoSt grafo){
-    return grafo->vertex_amm;
+    return grafo->cant_vertices;
 }
 
 u32 numeroDeLados(grafoSt grafo){
-    return grafo->edges_amm;
+    return grafo->cant_lados;
 }
 
 //  Debe ser O(1)

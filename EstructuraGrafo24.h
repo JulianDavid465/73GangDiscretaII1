@@ -33,33 +33,30 @@ typedef struct vertexSt{
     u32     *vecinos;
     color   color;
     u32     cantidad;
-} Vertex;
+} Vertice;
 
 //  Los grafos tienen su lista de vertices la cantidad de vertices y aristas y el Delta del grafo.
 
 
 typedef struct Grafo{
-    Vertex **vert;
-    u32     vertex_amm;
-    u32     edges_amm;
+    Vertice **vert;
+    u32     cant_vertices;
+    u32     cant_lados;
     u32     delta;
 }Grafo__St;
 
 typedef struct Grafo *grafoSt;
 
 //  Funcion auxiliar para crear un vertice, debe hacer malloc
-Vertex *create_vertex();
-
-//Ver si un vertice esta en el grafo
-bool in_grafo(u32 vert, grafoSt grafo);
+Vertice *crear_vertice();
   
 
 /*
   Funcion auxiliar para añadir una arista a un grafo, la idea es que mire cuales de los dos vertices
-    ya se han añadido al grafo, se crean los que no esten ya creados, y se toma alguno para
-    ir a su arreglo de hood y añadir al nuevo vecino, y lo mismo con el otro. 
+    ya se han añadido al grafo, se crean los que no esten ya creados, y se toma el primero para
+    añadir al segundo a sus vecinos y luego añadir al primero a los vecinos del segundo
 */
-void add_edge(grafoSt graf, u32 vert1, u32 vert2);
+void anadir_lado(grafoSt graf, u32 vert1, u32 vert2);
 
 // Devuelve el grado del vertice de un grafo
 u32 grado(u32 vert, grafoSt grafo);

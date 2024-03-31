@@ -16,7 +16,7 @@ int main() {
 
     // Imprimir los grados de cada vértice
     printf("Grados de los vértices:\n");
-    for (u32 i = 0; i < graph->vertex_amm; i++) {
+    for (u32 i = 0; i < graph->cant_vertices; i++) {
         if (graph->vert[i] != NULL) {
             printf("Vértice %u: Grado %u\n", i, grado(i, graph));
         }
@@ -24,7 +24,7 @@ int main() {
 
     // Imprimir los colores de cada vértice
     printf("Colores de los vértices:\n");
-    for (u32 i = 0; i < graph->vertex_amm; i++) {
+    for (u32 i = 0; i < graph->cant_vertices; i++) {
         if (graph->vert[i] != NULL) {
             asignarColor(i%10, i, graph);
             printf("Vértice %u: Color %u\n", i, colour(i, graph));
@@ -36,7 +36,7 @@ int main() {
 
     // Imprimir los vecinos de cada vértice
     printf("Vecinos de los vértices:\n");
-    for (u32 i = 0; i < graph->vertex_amm; i++) {
+    for (u32 i = 0; i < graph->cant_vertices; i++) {
         if (graph->vert[i] != NULL) {
             printf("Vértice %u: ", i);
             for (u32 j = 0; j < grado(i, graph); j++) {
@@ -62,8 +62,8 @@ int main() {
     for(u32 i = 0; i < numeroDeVertices(graph) ;i++){
         printf("Color de vertice %d es %d\n", i, colour2[i]);
     }
-    asignarColor(999, 255, graph);
-    printf("color de 255 es %d\n", colour(255, graph));
+    asignarColor(999, numeroDeVertices(graph)-1, graph);
+    printf("color de %d es %d\n", numeroDeVertices(graph)-1, colour(numeroDeVertices(graph)-1, graph));
 
     // Liberar la memoria del grafo
     destruirGrafo(graph);
