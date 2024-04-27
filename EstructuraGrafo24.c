@@ -4,7 +4,7 @@
 #include<stdio.h>
 #include<string.h>
 
-#include "EstructuraGrafo24.h"
+#include "APIG24.h"
 
 
 //  Funcion auxiliar para crear un vertice, debe hacer malloc
@@ -32,7 +32,7 @@ void destruir_vertice(Vertice *vertice) {
     ir a su arreglo de hood y añadir al nuevo vecino, y lo mismo con el otro. 
 */
 
-void anadir_lado(grafoSt graf, u32 vert1, u32 vert2) {
+void anadir_lado(Grafo graf, u32 vert1, u32 vert2) {
 
     if (graf->vert[vert1] == NULL) {
         graf->vert[vert1] = crear_vertice();
@@ -75,7 +75,7 @@ void anadir_lado(grafoSt graf, u32 vert1, u32 vert2) {
 }
 
 // Devuelve el grado del vertice de un grafo
-u32 grado(u32 vert, grafoSt grafo){
+u32 Grado(u32 vert, Grafo grafo){
     if(vert < grafo->cant_vertices){
         return grafo->vert[vert]->cant_vecinos;
     } else {
@@ -83,7 +83,7 @@ u32 grado(u32 vert, grafoSt grafo){
     }
 }
 
-color colour(u32 vert, grafoSt grafo){
+color Color(u32 vert, Grafo grafo){
     if(vert < grafo->cant_vertices){
         return grafo->vert[vert]->color;
     } else {
@@ -95,38 +95,38 @@ color colour(u32 vert, grafoSt grafo){
     Devuelve el nombre del j-esimo vecino de vert para acceder a SUS datos, tendra la pinta de
   grafo.vert[j]
 */
-u32 vecino(u32 j, u32 vert, grafoSt grafo){
-    if(vert < grafo->cant_vertices && j < grado(vert, grafo)){
+u32 Vecino(u32 j, u32 vert, Grafo grafo){
+    if(vert < grafo->cant_vertices && j < Grado(vert, grafo)){
         return grafo->vert[vert]->vecinos[j];
     } else {
         return (1<<30) - 1;
     }
 }
 
-void asignarColor(color c, u32 vert, grafoSt grafo){
+void AsignarColor(color c, u32 vert, Grafo grafo){
     if(vert < grafo->cant_vertices){
         grafo->vert[vert]->color = c;
     }
 }
 
 //Deposita en colour[i] el color del vertice i, colour tiene n lugares
-void extraerColor(grafoSt grafo, color *colour){
+void ExtraerColores(Grafo grafo, color *colour){
     for(u32 i = 0; i < grafo->cant_vertices ;i++){
         colour[i] = grafo->vert[i]->color;
     }
 }
 
 //Asigna el vertice i el color colour[i]
-void importarColores(color *colour, grafoSt grafo){
+void ImportarColores(color *colour, Grafo grafo){
     for(u32 i = 0; i < grafo->cant_vertices ;i++){
-        asignarColor(colour[i], i, grafo);
+        AsignarColor(colour[i], i, grafo);
     }
 }
 
 //  Crea un grafo desde el standard input. En caso de error se devuelve NULL, colorea todos los vertices con 
 //  el color 0
-grafoSt construirGrafo(){
-    grafoSt graf = malloc(sizeof(Grafo__St));
+Grafo ConstruirGrafo(){
+    Grafo graf = malloc(sizeof(GrafoSt));
 
     char c;
     char str[4];
@@ -137,6 +137,7 @@ grafoSt construirGrafo(){
     u32 escaneados = scanf("%c %s %u %u", &c, str, &num_vertices, &num_lados);
     if(escaneados != 4){
         printf("error");
+        return NULL;
     }
 
     if (graf != NULL) {
@@ -169,7 +170,7 @@ grafoSt construirGrafo(){
 
 
 //Debe ser como mucho O(m)
-void destruirGrafo(grafoSt grafo){
+void DestruirGrafo(Grafo grafo){
     for(u32 i = 0; i < grafo->cant_vertices ;i++){
         destruir_vertice(grafo->vert[i]);
     }
@@ -177,16 +178,16 @@ void destruirGrafo(grafoSt grafo){
     free(grafo);
 }
 
-u32 numeroDeVertices(grafoSt grafo){
+u32 NumeroDeVertices(Grafo grafo){
     return grafo->cant_vertices;
 }
 
-u32 numeroDeLados(grafoSt grafo){
+u32 NumeroDeLados(Grafo grafo){
     return grafo->cant_lados;
 }
 
 //  Debe ser O(1)
-u32 delta(grafoSt grafo){
+u32 Delta(Grafo grafo){
     return grafo->delta;
 }
 

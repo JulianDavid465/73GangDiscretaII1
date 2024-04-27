@@ -43,9 +43,7 @@ typedef struct Grafo{
     u32     cant_vertices;
     u32     cant_lados;
     u32     delta;
-}Grafo__St;
-
-typedef struct Grafo *grafoSt;
+}GrafoSt;
 
 //  Funcion auxiliar para crear un vertice, debe hacer malloc
 Vertice *crear_vertice();
@@ -56,40 +54,6 @@ Vertice *crear_vertice();
     ya se han añadido al grafo, se crean los que no esten ya creados, y se toma el primero para
     añadir al segundo a sus vecinos y luego añadir al primero a los vecinos del segundo
 */
-void anadir_lado(grafoSt graf, u32 vert1, u32 vert2);
-
-// Devuelve el grado del vertice de un grafo
-u32 grado(u32 vert, grafoSt grafo);
-
-color colour(u32 vert, grafoSt grafo);
-
-/*
-    Devuelve el nombre del j-esimo vecino de vert para acceder a SUS datos, tendra la pinta de
-  grafo.vert[j]
-*/
-u32 vecino(u32 j, u32 vert, grafoSt grafo);
-
-void asignarColor(color c, u32 vert, grafoSt grafo);
-
-//Deposita en colour[i] el color del vertice i, colour tiene n lugares
-void extraerColor(grafoSt grafo, color *colour);
-
-//Asigna el vertice i el color colour[i]
-void importarColores(color *colour, grafoSt grafo);
-
-//  Crea un grafo desde el standard input. En caso de error se devuelve NULL, colorea todos los vertices con 
-//  el color 0
-grafoSt construirGrafo();
-
-//Debe ser como mucho O(m)
-void destruirGrafo(grafoSt grafo);
-
-u32 numeroDeVertices(grafoSt grafo);
-
-u32 numeroDeLados(grafoSt grafo);
-
-//  Debe ser O(1)
-u32 delta(grafoSt grafo);
-
+void anadir_lado(GrafoSt *graf, u32 vert1, u32 vert2);
 
 #endif

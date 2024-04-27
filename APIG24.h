@@ -37,6 +37,8 @@ u32 Delta(Grafo G);
 
 u32 Grado(u32 i,Grafo G);
 color Color(u32 i,Grafo G);
+//Devuelve el nombre del j-esimo vecino de vert para acceder a SUS datos, tendra la pinta de
+//  grafo.vert[j]
 u32 Vecino(u32 j,u32 i,Grafo G);
 
 
