@@ -82,9 +82,12 @@ char GulDukat(Grafo G, u32* Orden){
     for (u32 j = 0; j < cuatro_i; j++){
         u32 M = 0;
         for (u32 h = 0; h < cuatro_i-1; h++){
-            if(colores_cuatro[h] != -1){
-                if(Grado(colores_cuatro[h], G) < Grado(colores_cuatro[h+1], G)){
+            if(Grado(colores_cuatro[h], G) < Grado(colores_cuatro[h+1], G)){
+                if(colores_cuatro[h] == -1){
                     M = h+1;
+                }
+                if(colores_cuatro[h+1] == -1){
+                    M = h;
                 }
             }
         }
@@ -96,9 +99,12 @@ char GulDukat(Grafo G, u32* Orden){
     for (u32 j = 0; j < pares_i; j++){
         u32 M = 0;
         for (u32 h = 0; h < pares_i-1; h++){
-            if(colores_pares[h] != -1){
-                if(Grado(colores_pares[h], G) < Grado(colores_pares[h+1], G)){
+            if(Grado(colores_pares[h], G) < Grado(colores_pares[h+1], G)){
+                if(colores_pares[h] == -1){
                     M = h+1;
+                }
+                if(colores_pares[h+1] == -1){
+                    M = h;
                 }
             }
         }
@@ -110,9 +116,12 @@ char GulDukat(Grafo G, u32* Orden){
     for (u32 j = 0; j < impares_i; j++){
         u32 M = 0;
         for (u32 h = 0; h < impares_i-1; h++){
-            if(colores_impares[h] != -1){
-                if(Grado(colores_impares[h], G) < Grado(colores_impares[h+1], G)){
+            if(Grado(colores_impares[h], G) < Grado(colores_impares[h+1], G)){
+                if(colores_impares[h] == -1){
                     M = h+1;
+                }
+                if(colores_impares[h+1] == -1){
+                    M = h;
                 }
             }
         }
