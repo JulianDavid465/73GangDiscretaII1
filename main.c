@@ -17,9 +17,15 @@ int main() {
 
     //u32 orden[NumeroDeVertices(graph)];
     
-    u32 orden[5] = {4, 3, 2, 1, 0};
-
+    u32 orden[5] = {0, 1, 2, 3, 4};
     u32 cantColores = Greedy(graph, orden);
+
+    GulDukat(graph, orden);
+
+    printf("El orden dado por GulDukar es:\n");
+    for(u32 i= 0; i < 5 ;i++){
+        printf("%d\n", orden[i]);
+    }
 
     // Imprimir los colores de cada vértice
     printf("Colores de los vértices:\n");
