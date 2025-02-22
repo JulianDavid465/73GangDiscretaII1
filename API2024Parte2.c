@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+Buenas tardes
 //el .h de abajo debe tener definida GrafoSt, u32 y color.
 #include "API2024Parte2.h"
 
